@@ -1,0 +1,71 @@
+//////////////////////////////////////////////////////////////////////////////ln
+function MyLn(var x: Real): Real;
+var
+  Prev, Zn, Sign, Temp: Real;
+begin
+  Sign:= 1;
+  Temp:= x-1;
+  Zn:= 1;
+  Result:= 0;
+  Prev:= 1;
+
+  if x < 1.0000000000001 then
+    while (Abs(Result - Prev) > 0.0000000000001) do
+    begin
+      Prev:= Result;
+      Result:= Result + Sign * Temp / Zn;
+      Sign:= -Sign;
+      Temp:= Temp * (x-1);
+      Zn:= Zn + 1;
+    end
+  else
+      begin
+        Temp:= 1/x-1;
+        while (Abs(Result - Prev) > 0.0000000000001) do
+        begin
+          Prev:= Result;
+          Result:= Result + Sign * Temp / Zn;
+          Sign:= -Sign;
+          Temp:= Temp * (1/x-1);
+          Zn:= Zn + 1;
+        end;
+        Result:= -Result;
+      end;
+end;
+
+Procedure PreLn(var Str:string);
+var s,s2,s3:string;
+k,i,n,n1,n2,p,g:integer;
+k1,k2:real;
+begin
+p:=1;
+while p<>0 do
+Begin
+p:=pos('Ln(',str); p:=p+3;
+k:= length(Str);
+s:=''; s2:='';
+n:=0;
+n1:=0;
+n2:=0;
+for i := 1 to k do
+  begin
+   if (str[i-2] ='L') and (str[i-1] ='n') and (str[i] ='(')then
+     begin
+         g:=i;
+         while g<=k do
+           begin
+              if str[g+1] in (['1','2','3','4','5','6','7','8','9','0']) then  s2:=s2+str[g+1];
+              if str[g+2] in ['+', '-', '*', '/',')','('] then break else inc(g);
+           end;
+      delete(Str, p-3, length(s2) + 4);
+      k1:=  StrToFloat(s2) ;
+      k2:= MyLn(k1);
+      s3:=FloatToStr(k2);
+      Insert(s3, str, p-3);
+      str:=StringReplace(str, ',', '.', [rfReplaceAll, rfIgnoreCase]);
+                                 //   Form1.label3.Caption:=str;
+     end;
+   end;
+    p:=pos('Ln(',str);
+End;
+end;
