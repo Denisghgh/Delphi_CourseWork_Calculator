@@ -1,2 +1,2 @@
-# Delphi_labs
-All my labs work on Delphi 7 &amp; Delphi 10
+# Delphi_lab
+My lab on Delphi 7: Calculator + drawing a given function
